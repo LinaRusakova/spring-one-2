@@ -2,13 +2,11 @@ package ru.geekbrains.spring.one.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "products")
@@ -24,13 +22,13 @@ public class Product {
     @Column(name = "price")
     private int price;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
-    public Category getCategory() {
-        return category;
-    }
+//    public Category getCategory() {
+//        return category;
+//    }
 
     public Long getId() {
         return id;
@@ -44,27 +42,19 @@ public class Product {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public Product() {
     }
 
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
+    public void incrementPrice(int amount) {
+        price +=amount;
     }
 
     @Override
     public String toString() {
-        return category.getTitle();
+        return this.getTitle();
     }
+
     public String getNameCategory() {
-        return category.getTitle();
+        return this.getTitle();
     }
 }
