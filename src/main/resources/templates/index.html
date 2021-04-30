@@ -46,7 +46,7 @@
     </form>
     <h5 th:text="${page.size}"/>
     <a th:href="@{/products/add}" class="btn btn-primary">Добавить новый товар</a>
-
+    <br>
     <nav aria-label="Page navigation" th:if="${page.getTotalPages()>1}">
         <ul class="pagination">
             <li class="page-item" th:each="i:${#numbers.sequence(1, page.getTotalPages())}">
@@ -60,19 +60,19 @@
             <h4>Отфильтровать товары</h4>
             <li>
                 <span th:text="${'по цене:  от'}"/>
-                <input type="number" name="min" min="0" autofocus/>
+                <input type="number" name="min" min="0"  value="0" th:value="${filters.minPrice}" autofocus/>
                 <span th:text="${'до: '}"/>
-                <input type="number" name="max" min="0"/>
+                <input type="number" name="max" value="0"  th:value="${filters.maxPrice}" min="0"/>
             </li>
             <br>
             <li>
                 <span th:text="${'По ключевому слову'}"/>
-                <input type="text"/>
+                <input type="text" name="filter" value="" th:value="${filters.filter}" min="0"/>
                 <br>
             </li>
-            <li></li>
-        </ul>
 
+        </ul>
+        <br>
         <input type="submit" value="Применить" class="btn btn-primary"/>
     </form>
 </div>

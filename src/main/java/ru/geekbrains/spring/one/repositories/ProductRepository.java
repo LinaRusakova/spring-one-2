@@ -12,7 +12,7 @@ import ru.geekbrains.spring.one.model.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    Page<Product> findAllByPriceLessThanEqualAndPriceGreaterThanEqual(int min, int max, Pageable pagenation);
+    Page<Product> findAllByPriceLessThanEqualAndPriceGreaterThanEqualAndTitleContains(int min, int max, String title, Pageable pagenation);
 
     Product findDistinctFirstByOrderByPriceDesc();
 
