@@ -20,18 +20,21 @@
             <th>Название</th>
             <th>Цена</th>
             <th>Категория товара</th>
-            <th>Действия</th>
+            <!--            <th>Действия</th>-->
         </tr>
         </thead>
         <tbody>
-        <tr th:each="p : ${products}">
+        <tr th:each="p : ${page.getContent()}">
             <td th:text="${p.id}"/>
-            <td th:text="${p.title}"/>
-            <td th:text="${p.price}"/>
-            <td >
-                <form method="GET" th:href="@{'/'}">
-                    <input type="submit" class="btn btn-primary" th:name="category" th:value="${p.getNameCategory()}">
-                </form>
+            <td>
+                <a th:text="${p.title}" th:href="@{'/products/'+${p.id}}"></a>
+            </td>
+            <td>
+                <span th:text="${p.price}"/>
+                <a class="btn btn-primary" th:href="@{'/products/'+${p.id}+'/price/inc'}">+</a>
+                <!--                <a class="btn btn-primary" th:href="@{'/products/'+${p.id}+'/price/dec'">-</a>-->
+            </td>
+            <td th:text="${p.category.title}"/>
             </td>
 
             <td>
@@ -41,8 +44,37 @@
         </tbody>
     </table>
     </form>
-
+    <h5 th:text="${page.size}"/>
     <a th:href="@{/products/add}" class="btn btn-primary">Добавить новый товар</a>
+    <br>
+    <nav aria-label="Page navigation" th:if="${page.getTotalPages()>1}">
+        <ul class="pagination">
+            <li class="page-item" th:each="i:${#numbers.sequence(1, page.getTotalPages())}">
+                <a th:class="page-link" th:text="${i}" th:href="@{'/?p=' + ${i} }"></a>
+            </li>
+        </ul>
+    </nav>
+
+    <form method="GET" th:action="@{'/'}">
+        <ul>
+            <h4>Отфильтровать товары</h4>
+            <li>
+                <span th:text="${'по цене:  от'}"/>
+                <input type="number" name="min" min="0"  value="0" th:value="${filters.minPrice}" autofocus/>
+                <span th:text="${'до: '}"/>
+                <input type="number" name="max" value="0"  th:value="${filters.maxPrice}" min="0"/>
+            </li>
+            <br>
+            <li>
+                <span th:text="${'По ключевому слову'}"/>
+                <input type="text" name="filter" value="" th:value="${filters.filter}" min="0"/>
+                <br>
+            </li>
+
+        </ul>
+        <br>
+        <input type="submit" value="Применить" class="btn btn-primary"/>
+    </form>
 </div>
 </body>
 </html>
